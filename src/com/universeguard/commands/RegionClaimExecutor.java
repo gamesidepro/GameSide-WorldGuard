@@ -48,7 +48,7 @@ public class RegionClaimExecutor implements CommandExecutor{
                                         }
                                         int mr = 0;
                                         UUID p = player.getUniqueId();
-					for(Region region : RegionUtils.getAllRegions()) {
+					for(Region region : UniverseGuard.instance.regions) {
 						if(region.isOwner(p)) {
                                                     mr = mr + 1;
 						}
@@ -61,7 +61,7 @@ public class RegionClaimExecutor implements CommandExecutor{
                                             Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Вы пытаетесь разместить свой приват в чужом.");
                                             return CommandResult.success();  
                                         }
-					for(Region region : RegionUtils.getAllRegions()) {
+					for(Region region : UniverseGuard.instance.regions) {
 						if(region.getName().equalsIgnoreCase(name)) {
 							Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Имя региона уже занято.");
 							return CommandResult.success();

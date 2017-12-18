@@ -1,5 +1,6 @@
 package com.universeguard.utils;
 
+import com.universeguard.UniverseGuard;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class RegionUtils {
 		}
 	}
 	
-	public static ArrayList<Region> getAllRegions() {
-		ArrayList<Region> regions = new ArrayList<Region>();
+	public static void getAllRegions(ArrayList<Region> regions) {
+		
 		File dir = new File("config/universeguard/regions");
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
@@ -45,7 +46,6 @@ public class RegionUtils {
 
 		}
 
-		return regions;
 	}
 
 	public static boolean isInRegion(Region r, Location<World> l) {
@@ -67,9 +67,10 @@ public class RegionUtils {
 	}
 
 	public static Region load(Location<World> location) {
+                
 		ArrayList<Region> regions = new ArrayList<Region>();
-		if(getAllRegions() != null) {
-			for (Region r : getAllRegions()) {
+		if(UniverseGuard.instance.regions != null) {
+			for (Region r : UniverseGuard.instance.regions) {
 				if (isInRegion(r, location))
 					regions.add(r);
 			}
@@ -139,8 +140,8 @@ public class RegionUtils {
         }
         
         public static boolean regionInRegion(Location<World> location, Region region){
-		if(getAllRegions() != null) {
-			for (Region r : getAllRegions()) {
+		if(UniverseGuard.instance.regions != null) {
+			for (Region r : UniverseGuard.instance.regions) {
 				if (regionInRegionT(region, r)){
                                         return true;
                                 }
@@ -154,7 +155,7 @@ public class RegionUtils {
 		if(name.isEmpty()) {
 			name = "Region";
 			int d = 0;
-			for(Region region : getAllRegions()) {
+			for(Region region : UniverseGuard.instance.regions) {
 				String n = region.getName();
 				if(n.startsWith("Region"))
 					d++;
@@ -240,6 +241,7 @@ public class RegionUtils {
 
 		try {
 			loader.save(root);
+                        UniverseGuard.instance.regions.add(r);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -364,9 +366,10 @@ public class RegionUtils {
 	public static void delete(Player p, String name) {
 		File file = new File("config/universeguard/regions/" + name + ".json");
 		if (file.exists()) {
-			if(file.delete())
-				Utils.sendMessage(p, TextColors.GREEN, "Region ", name, " successfully deleted!");
-			else
+			if(file.delete()){
+                                UniverseGuard.instance.regions.remove(getByName(name));
+				Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
+                        }else
 				Utils.sendMessage(p, TextColors.RED, "Can't delete the region ", name, "!");
 		}
 		else
@@ -376,15 +379,18 @@ public class RegionUtils {
 	public static void delete(String name) {
 		File file = new File("config/universeguard/regions/" + name + ".json");
 		if (file.exists()) {
+                        UniverseGuard.instance.regions.remove(getByName(name));
 			file.delete();
 		}
 	}
 	
 	public static void delete(Player p, Location<World> l) {
 		Region r = load(l);
-		if(r != null)
+		if(r != null){
 			delete(p, r.getName());
-		else
+                        UniverseGuard.instance.regions.remove(load(l));
+                        UniverseGuard.instance.getLogger().info("Successfully deleted.");
+                }else
 			Utils.sendMessage(p, TextColors.RED, "There's no region here!");
 		
 	}

@@ -20,6 +20,7 @@ import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
 import com.universeguard.utils.Utils;
+import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.text.format.TextColors;
 
 
@@ -113,6 +114,8 @@ public class EventBlockBreak {
 					event.setCancelled(!r.getFlag("enderchests"));
 				else
 					event.setCancelled(!r.getFlag("build"));
+                                
+                                Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "У вас недостаточно прав.");
 			}
 				
 		} else {

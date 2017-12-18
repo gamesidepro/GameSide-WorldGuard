@@ -16,9 +16,10 @@ public class EventItemDrop {
 	@Listener
 	public void onItemDrop(SpawnEntityEvent event, @First EntitySpawnCause spawnCause) {
 		if (spawnCause.getType() == SpawnTypes.DROPPED_ITEM) {
-			Region r = RegionUtils.load(spawnCause.getEntity().getLocation());
+			
 			if (spawnCause.getEntity() instanceof Player) {
 				Player p = (Player) spawnCause.getEntity();
+                                Region r = RegionUtils.load(spawnCause.getEntity().getLocation());
 				if (r != null) {
 					if (!RegionUtils.hasPermission(p, r))
 						event.setCancelled(!r.getFlag("itemdrop"));

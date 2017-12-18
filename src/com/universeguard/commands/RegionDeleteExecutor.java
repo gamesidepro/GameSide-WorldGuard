@@ -35,6 +35,10 @@ public class RegionDeleteExecutor implements CommandExecutor {
 					r = RegionUtils.load(player.getLocation());
 				}
 			}
+                        if(r==null){
+                            Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Выбранного региона не существует.");
+                            return CommandResult.success();
+                        }
                         UUID p = player.getUniqueId();
                         if((r.getOwners().contains(p) && r!=null) || player.hasPermission(Utils.getPermission("bypass"))) {
                             if(args.hasAny(Text.of("name"))) {

@@ -1,5 +1,6 @@
 package com.universeguard.commands;
 
+import com.universeguard.UniverseGuard;
 import java.util.ArrayList;
 
 import org.spongepowered.api.command.CommandException;
@@ -24,7 +25,7 @@ public class RegionListExecutor implements CommandExecutor {
 			Player player = (Player)src;
 			ArrayList<Text> regions = new ArrayList<Text>();
 			Utils.sendMessage(player, TextColors.YELLOW, "--------------------Regions saved--------------------");
-			for(Region r : RegionUtils.getAllRegions()) {
+			for(Region r : UniverseGuard.instance.regions) {
 				regions.add(Text.of(r.getOwners().contains(player.getUniqueId()) ? TextColors.GOLD : TextColors.RESET, r.getName(), ","));
 			}
 			if(regions.isEmpty())

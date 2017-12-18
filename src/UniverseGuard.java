@@ -74,6 +74,7 @@ import com.universeguard.events.flags.EventSpawnVehicle;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
 import com.universeguard.utils.Utils;
+import java.util.ArrayList;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -84,7 +85,9 @@ public class UniverseGuard {
 	public HashMap<Player, Region> pendings = new HashMap<Player, Region>();
         public HashMap<Player, Integer> traders = new HashMap<Player, Integer>();
 	public static UniverseGuard instance;
-	
+	public static Region r;
+        public ArrayList<Region> regions = new ArrayList<Region>();
+        
         
         
 	@Inject
@@ -317,7 +320,7 @@ public class UniverseGuard {
 		game.getEventManager().registerListeners(this, new EventBlockUse());
 		game.getEventManager().registerListeners(this, new EventSpawnVehicle());
 		game.getEventManager().registerListeners(this, new EventChat());
-		game.getEventManager().registerListeners(this, new EventFlow());
+		//game.getEventManager().registerListeners(this, new EventFlow());
 		game.getEventManager().registerListeners(this, new EventDecay());
 		game.getEventManager().registerListeners(this, new EventSpawnItem());
 		game.getEventManager().registerListeners(this, new EventCommandSend());
@@ -326,19 +329,12 @@ public class UniverseGuard {
                 
 		
 		
-		Task.builder().execute(new EventSetGamemode())
-		        .interval(1, TimeUnit.SECONDS)
-		        .name("Set Gamemode Timer Task").submit(instance);
-		Task.builder().execute(new EventHunger())
-        .interval(1, TimeUnit.SECONDS)
-        .name("Hunger Timer Task").submit(instance);
-		
-		
 		logger.info("GameSide World Guard loaded!");
 	}
 	
 	@Listener
 	public void onStart(GameStartedServerEvent event) {
 		RegionUtils.loadGlobalRegions();
+                RegionUtils.getAllRegions(regions);
 	}
 }

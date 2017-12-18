@@ -25,7 +25,7 @@ public class RegionNameExecutor implements CommandExecutor {
 			if(r != null && r.isOwner(player.getUniqueId())) {
 				if(args.hasAny("name")) {
 					String name = args.<String>getOne("name").get();
-					for(Region region : RegionUtils.getAllRegions()) {
+					for(Region region : UniverseGuard.instance.regions) {
 						if(region.getName().equalsIgnoreCase(name)) {
 							Utils.sendMessage(player, TextColors.RED, "Данное имя региона занято!");
 							return CommandResult.success();

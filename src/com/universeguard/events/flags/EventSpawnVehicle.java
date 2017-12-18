@@ -12,23 +12,24 @@ import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
 
-public class EventSpawnPotion {
+public class EventSpawnVehicle {
 
 	@Listener
-	public void onPotionSpawn(SpawnEntityEvent event, @First EntitySpawnCause e) {
-		Region r = RegionUtils.load(e.getEntity().getLocation());
+	public void onVehicleSpawn(SpawnEntityEvent event, @First EntitySpawnCause e) {
+		
 		if (e.getType() == SpawnTypes.PLACEMENT) {
-			if (e.getEntity().getType() == EntityTypes.PLAYER && (event.getEntities().get(0).getType() == EntityTypes.SPLASH_POTION
-					|| event.getEntities().get(0).getType() == EntityTypes.AREA_EFFECT_CLOUD)) {
+			if (e.getEntity().getType() == EntityTypes.PLAYER && 
+					(event.getEntities().get(0).getType() == EntityTypes.BOAT || event.getEntities().get(0).getType() == EntityTypes.RIDEABLE_MINECART)) {
 				Player p = (Player)e.getEntity();
+                                Region r = RegionUtils.load(e.getEntity().getLocation());
 				if (r != null) {
 					if(!RegionUtils.hasPermission(p, r))
-						event.setCancelled(!r.getFlag("potionsplash"));
+						event.setCancelled(!r.getFlag("vehicleplace"));
 				} else {
 					if(!RegionUtils.hasGlobalPermission(p)) {
 						GlobalRegion gr = RegionUtils.loadGlobal(e.getEntity().getWorld().getName());
 						if(gr != null)
-							event.setCancelled(!gr.getFlag("potionsplash"));
+							event.setCancelled(!gr.getFlag("vehicleplace"));
 					}
 						
 				}

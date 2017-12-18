@@ -19,11 +19,12 @@ public class EventSpawnEnderPearl {
 
 	@Listener
 	public void onEnderPearl(SpawnEntityEvent event, @First EntitySpawnCause e) {
-		Region r = RegionUtils.load(e.getEntity().getLocation());
+		
 		if (e.getType() == SpawnTypes.PLACEMENT) {
 			if (e.getEntity().getType() == EntityTypes.PLAYER
 					&& event.getEntities().get(0).getType() == EntityTypes.ENDER_PEARL) {
 				Player p = (Player) e.getEntity();
+                                Region r = RegionUtils.load(e.getEntity().getLocation());
 				if (r != null) {
 					if (!RegionUtils.hasPermission(p, r)) {
 						boolean b = !r.getFlag("enderpearl");
