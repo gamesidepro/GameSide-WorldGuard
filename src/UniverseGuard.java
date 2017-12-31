@@ -79,7 +79,7 @@ import java.util.ArrayList;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
-@Plugin(id = "universeguard", name = "UniverseGuard", version = "1.2", description="A World Guard solution for Sponge", authors = "Twelvee")
+@Plugin(id = "universeguard", name = "UniverseGuard", version = "1.2", description="A World Guard solution for Sponge", authors = "Twelvee, Midnight")
 public class UniverseGuard {
         //PlayerInfo pl;
 	public HashMap<Player, Region> pendings = new HashMap<Player, Region>();
@@ -321,7 +321,7 @@ public class UniverseGuard {
 		game.getEventManager().registerListeners(this, new EventSpawnVehicle());
 		game.getEventManager().registerListeners(this, new EventChat());
 		//game.getEventManager().registerListeners(this, new EventFlow());
-		game.getEventManager().registerListeners(this, new EventDecay());
+		//game.getEventManager().registerListeners(this, new EventDecay());
 		game.getEventManager().registerListeners(this, new EventSpawnItem());
 		game.getEventManager().registerListeners(this, new EventCommandSend());
 		game.getEventManager().registerListeners(this, new EventSpawnPotion());
@@ -329,7 +329,7 @@ public class UniverseGuard {
                 
 		
 		
-		logger.info("GameSide World Guard loaded!");
+		logger.info("GameSide World Guard has loaded!");
 	}
 	
 	@Listener
