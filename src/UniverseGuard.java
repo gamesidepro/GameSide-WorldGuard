@@ -321,7 +321,7 @@ public class UniverseGuard {
 		game.getEventManager().registerListeners(this, new EventSpawnVehicle());
 		game.getEventManager().registerListeners(this, new EventChat());
 		//game.getEventManager().registerListeners(this, new EventFlow());
-		//game.getEventManager().registerListeners(this, new EventDecay());
+		game.getEventManager().registerListeners(this, new EventDecay());
 		game.getEventManager().registerListeners(this, new EventSpawnItem());
 		game.getEventManager().registerListeners(this, new EventCommandSend());
 		game.getEventManager().registerListeners(this, new EventSpawnPotion());
