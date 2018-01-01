@@ -15,6 +15,7 @@ import org.spongepowered.api.world.World;
 
 import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
+import java.util.ConcurrentModificationException;
 
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.ConfigurationOptions;
@@ -367,8 +368,16 @@ public class RegionUtils {
 		File file = new File("config/universeguard/regions/" + name + ".json");
 		if (file.exists()) {
 			if(file.delete()){
-                                UniverseGuard.instance.regions.remove(getByName(name));
+                            try{
+                                for(Region ar : UniverseGuard.instance.regions){
+                                    if(ar.getName().equals(name))
+                                        UniverseGuard.instance.regions.remove(ar);
+                                }
 				Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
+                            }catch(ConcurrentModificationException e){
+                                Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
+                                e.printStackTrace();
+                            }
                         }else
 				Utils.sendMessage(p, TextColors.RED, "Can't delete the region ", name, "!");
 		}
@@ -379,8 +388,15 @@ public class RegionUtils {
 	public static void delete(String name) {
 		File file = new File("config/universeguard/regions/" + name + ".json");
 		if (file.exists()) {
-                        UniverseGuard.instance.regions.remove(getByName(name));
-			file.delete();
+                    try{
+                        for(Region ar : UniverseGuard.instance.regions){
+                            if(ar.getName().equals(name))
+                                UniverseGuard.instance.regions.remove(ar);
+                        }
+			file.delete();   
+                    }catch(ConcurrentModificationException e){
+                        e.printStackTrace();
+                    }
 		}
 	}
 	
@@ -388,8 +404,6 @@ public class RegionUtils {
 		Region r = load(l);
 		if(r != null){
 			delete(p, r.getName());
-                        UniverseGuard.instance.regions.remove(load(l));
-                        UniverseGuard.instance.getLogger().info("Successfully deleted.");
                 }else
 			Utils.sendMessage(p, TextColors.RED, "There's no region here!");
 		

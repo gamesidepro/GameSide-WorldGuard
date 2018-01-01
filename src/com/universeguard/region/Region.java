@@ -267,9 +267,6 @@ public class Region {
 						| SecurityException e) {
 					e.printStackTrace();
 				}
-                                UniverseGuard.instance.getLogger().info("IF");
-                        }else{
-                            UniverseGuard.instance.getLogger().info("ELSE");
                         }
 		}
 		return false;
