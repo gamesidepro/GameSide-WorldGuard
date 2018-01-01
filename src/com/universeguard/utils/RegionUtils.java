@@ -375,7 +375,8 @@ public class RegionUtils {
                                 }
 				Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
                             }catch(ConcurrentModificationException e){
-                                Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
+                                Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
+                                //Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
                                 e.printStackTrace();
                             }
                         }else
@@ -404,6 +405,7 @@ public class RegionUtils {
 		Region r = load(l);
 		if(r != null){
 			delete(p, r.getName());
+                        //Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", r.getName(), TextColors.WHITE, " успешно удален!");
                 }else
 			Utils.sendMessage(p, TextColors.RED, "There's no region here!");
 		
