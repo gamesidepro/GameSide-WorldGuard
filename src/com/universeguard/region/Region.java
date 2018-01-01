@@ -1,5 +1,6 @@
 package com.universeguard.region;
 
+import com.universeguard.UniverseGuard;
 import com.universeguard.utils.RegionUtils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -258,7 +259,7 @@ public class Region {
 	public boolean setFlag(String flag, boolean value) {
 		Field[] fields = this.getClass().getDeclaredFields();
 		for (Field f : fields) {
-			if (f.getName().equalsIgnoreCase(flag))
+			if (f.getName().equalsIgnoreCase(flag)){
 				try {
 					this.getClass().getDeclaredField(flag).setBoolean(this, value);
 					return true;
@@ -266,6 +267,10 @@ public class Region {
 						| SecurityException e) {
 					e.printStackTrace();
 				}
+                                UniverseGuard.instance.getLogger().info("IF");
+                        }else{
+                            UniverseGuard.instance.getLogger().info("ELSE");
+                        }
 		}
 		return false;
 	}
