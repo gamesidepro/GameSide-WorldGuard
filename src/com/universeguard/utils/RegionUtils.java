@@ -372,14 +372,22 @@ public class RegionUtils {
 		if (file.exists()) {
 			if(file.delete()){
                             try{
+                            	int ind = -1;
                                 for(Region ar : UniverseGuard.instance.regions){
-                                    if(ar.getName().equals(name))
-                                        UniverseGuard.instance.regions.remove(ar);
+                                    if(ar.getName().equals(name)) {
+										ind = UniverseGuard.instance.regions.indexOf(ar);
+										break;
+                                    }
                                 }
-				Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
-                            }catch(ConcurrentModificationException e){
-                                Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
-                                //Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
+                                if (ind != -1) {
+									UniverseGuard.instance.regions.remove(ind);
+									Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
+								} else
+									Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", name, " не найден!");
+
+							}catch(ConcurrentModificationException e){
+                                //Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
+                                Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
                                 e.printStackTrace();
                             }
                         }else
@@ -408,8 +416,7 @@ public class RegionUtils {
 		Region r = load(l);
 		if(r != null){
 			delete(p, r.getName());
-                        //Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", r.getName(), TextColors.WHITE, " успешно удален!");
-                }else
+		}else
 			Utils.sendMessage(p, TextColors.RED, "There's no region here!");
 		
 	}
