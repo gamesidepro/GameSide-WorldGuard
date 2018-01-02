@@ -69,6 +69,7 @@ public class ConfigurationManager {
 				config.getNode("flags").getNode("mobpvp").setValue(true);
 				config.getNode("flags").getNode("animalspvp").setValue(true);
 				
+                                config.getNode("blockuse").getNode("chests").setValue("");
 				/*config.getNode("flags").getNode("lightning").setValue(true);		
 				config.getNode("flags").getNode("pistons").setValue(true);				
 				config.getNode("flags").getNode("snowfall").setValue(true);

@@ -1,6 +1,7 @@
 package com.universeguard.events.flags;
 
 import com.universeguard.UniverseGuard;
+import com.universeguard.config.ConfigurationManager;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.entity.EntityType;
@@ -18,6 +19,7 @@ import com.universeguard.utils.Utils;
 import java.util.Optional;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockType;
+import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.item.BlockItemData;
 import org.spongepowered.api.event.item.inventory.InteractInventoryEvent;
 import org.spongepowered.api.text.format.TextColors;
@@ -31,11 +33,14 @@ public class EventBlockUse {
                 //Utils.sendMessage(player, TextColors.GOLD, "ITEMID: ", block.toString());
                 boolean isTradeMarket = false;
                 if(block.toString().contains("type=trade_o_mat")){
-                        //Utils.sendMessage(player, TextColors.GOLD, "Вы открываете торговый аппарат");
                         isTradeMarket = true;
-                       
                 }
                 //Block{ironchest:iron_chest}
+                
+                String first_id = block.getState().getType().getId();
+
+                Utils.sendMessage(player, TextColors.AQUA, "[1-st id] ", TextColors.RED, first_id);
+
 		if(isTradeMarket==true){
                     if(!UniverseGuard.instance.traders.containsValue(event.getTargetBlock().hashCode())){
                         UniverseGuard.instance.traders.put(player, event.getTargetBlock().hashCode());
@@ -47,7 +52,8 @@ public class EventBlockUse {
 				|| block.getState().getType().toString().split(":")[0].equals("Block{ironchest")
                                 || block.getState().getType().toString().equals("Block{advanced_solar_panels:machines}")
                                 || block.getState().getType().toString().split(":")[0].equals("Block{refinedstorage")
-                                || block.getState().getType().toString().equals("Block{ic2:te}"))
+                                || block.getState().getType().toString().equals("Block{ic2:te}")
+                                || ConfigurationManager.getInstance().getConfig().getNode("blockuse").getNode(first_id).getBoolean()==true)
                         && isTradeMarket==false) {
 			r = RegionUtils.load(block.getLocation().get());
 			if (r != null) {

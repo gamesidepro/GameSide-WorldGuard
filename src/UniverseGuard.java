@@ -21,6 +21,7 @@ import org.spongepowered.api.text.Text;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
+import com.universeguard.commands.RegionAddChestExecutor;
 import com.universeguard.commands.RegionAddMemberExecutor;
 import com.universeguard.commands.RegionAddOwnerExecutor;
 import com.universeguard.commands.RegionCommandExecutor;
@@ -207,6 +208,10 @@ public class UniverseGuard {
 		CommandSpec regionSaveSpec = CommandSpec.builder().description(Text.of("Сохранить регион"))
 				.permission(Utils.getPermission("permission"))
 				.executor(new RegionSaveExecutor()).build();
+
+		CommandSpec regionAddChestType = CommandSpec.builder().description(Text.of("Добавить тип сундука"))
+				.permission(Utils.getPermission("permission"))
+				.executor(new RegionAddChestExecutor()).build();
                 
 		CommandSpec regionClaim = CommandSpec.builder().description(Text.of("Создать регион"))
 				.permission(Utils.getPermission("userperm"))
@@ -276,6 +281,7 @@ public class UniverseGuard {
 		CommandSpec regionCommandSpec = CommandSpec.builder().description(Text.of("Команды плагина"))
 				.executor(new RegionExecutor())
 				.child(regionSaveSpec, "save")
+                                .child(regionAddChestType, "chest")
                                 .child(regionClaim, "claim")
 				.child(regionInfoSpec, "info")
 				.child(regionDeleteSpec, "delete")
