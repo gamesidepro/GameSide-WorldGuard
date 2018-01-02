@@ -83,10 +83,10 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 public class UniverseGuard {
         //PlayerInfo pl;
 	public HashMap<Player, Region> pendings = new HashMap<Player, Region>();
-        public HashMap<Player, Integer> traders = new HashMap<Player, Integer>();
+	public HashMap<Player, Integer> traders = new HashMap<Player, Integer>();
 	public static UniverseGuard instance;
 	public static Region r;
-        public ArrayList<Region> regions = new ArrayList<Region>();
+	public ArrayList<Region> regions = new ArrayList<Region>();
         
         
         
@@ -335,6 +335,6 @@ public class UniverseGuard {
 	@Listener
 	public void onStart(GameStartedServerEvent event) {
 		RegionUtils.loadGlobalRegions();
-                RegionUtils.getAllRegions(regions);
+		RegionUtils.getAllRegions(regions);
 	}
 }

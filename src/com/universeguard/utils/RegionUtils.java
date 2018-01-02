@@ -242,7 +242,10 @@ public class RegionUtils {
 
 		try {
 			loader.save(root);
-                        UniverseGuard.instance.regions.add(r);
+			int ind = UniverseGuard.instance.regions.indexOf(r);
+			if (ind != -1)
+			    UniverseGuard.instance.regions.remove(ind);
+			UniverseGuard.instance.regions.add(r);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

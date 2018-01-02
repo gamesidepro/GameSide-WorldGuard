@@ -101,7 +101,7 @@ public class Region {
 		name = "";
 		priority = 0;
 		owners = new ArrayList<UUID>();
-                members = new ArrayList<UUID>();
+		members = new ArrayList<UUID>();
 		commands = new ArrayList<String>();
 		gamemode = GameModes.NOT_SET;
 		teleport = this.pos1;
