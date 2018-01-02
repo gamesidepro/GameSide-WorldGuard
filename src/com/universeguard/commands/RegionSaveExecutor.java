@@ -33,7 +33,7 @@ public class RegionSaveExecutor implements CommandExecutor {
 						r.setSpawn(r.getPos1());
 					RegionUtils.save(r);
 					UniverseGuard.instance.pendings.remove(player);
-					Utils.sendMessage(player, TextColors.GREEN, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", r.getName(), " создан!");
+					Utils.sendMessage(player, TextColors.GREEN, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", r.getName(), " успешно сохранен!");
 				}
 				
 			}

@@ -39,13 +39,13 @@ public class RegionEditExecutor implements CommandExecutor {
 				}
 				UniverseGuard.instance.pendings.put(player, r);
 				Sponge.getCommandManager().process(player, "region info " + r.getName());
-				Utils.sendMessage(player, TextColors.GREEN, "Editing region ", r.getName(), ". Remember to type /region save when done or any changes won't be saved!");
+				Utils.sendMessage(player, TextColors.GREEN, "[Игровая Сторона] ", TextColors.WHITE, "Изменение региона ", r.getName(), ". Не забудьте написать /region save когда завершите редактирование региона!");
 			}
 			else {
-				if(name != null) 
-					Utils.sendMessage(player, TextColors.RED, "Can't find the region ", name, "!");
+				if(name != null)
+					Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", name, " не найден!");
 				else
-					Utils.sendMessage(player, TextColors.RED, "There's no region here!");
+					Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "В этом месте региона нет!");
 			}
 			
 			return CommandResult.success();
