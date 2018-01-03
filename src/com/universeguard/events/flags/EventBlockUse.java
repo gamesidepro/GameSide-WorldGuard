@@ -39,7 +39,7 @@ public class EventBlockUse {
                 
                 String first_id = block.getState().getType().getId();
 
-                Utils.sendMessage(player, TextColors.AQUA, "[1-st id] ", TextColors.RED, first_id);
+                //Utils.sendMessage(player, TextColors.AQUA, "[1-st id] ", TextColors.RED, first_id);
 
 		if(isTradeMarket==true){
                     if(!UniverseGuard.instance.traders.containsValue(event.getTargetBlock().hashCode())){

@@ -11,17 +11,22 @@ import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.filter.cause.Root;
+import org.spongepowered.api.event.filter.type.Exclude;
+import org.spongepowered.api.event.filter.type.Include;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 
 import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
+import org.spongepowered.api.world.gen.populator.ChorusFlower;
 
 public class EventBlockPlace {
 
 	@Listener
-	public void onBlockPlaceByEntity(ChangeBlockEvent.Place event) {
+    @Include(ChangeBlockEvent.Place.class)
+    @Exclude(ChangeBlockEvent.Grow.class)
+	public void onBlockPlaceByEntity(ChangeBlockEvent event) {
 		if (event.getCause().root() instanceof Enderman) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
