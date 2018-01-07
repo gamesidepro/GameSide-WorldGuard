@@ -26,6 +26,7 @@ import com.universeguard.commands.RegionAddMemberExecutor;
 import com.universeguard.commands.RegionAddOwnerExecutor;
 import com.universeguard.commands.RegionCommandExecutor;
 import com.universeguard.commands.RegionClaimExecutor;
+import com.universeguard.commands.RegionContractExecutor;
 import com.universeguard.commands.RegionExpandExecutor;
 import com.universeguard.commands.RegionDeleteExecutor;
 import com.universeguard.commands.RegionEditExecutor;
@@ -153,6 +154,12 @@ public class UniverseGuard {
 
 		CommandSpec regionExpandAction = CommandSpec.builder().description(Text.of("Расширить регион"))
 				.executor(new RegionExpandExecutor()).
+				arguments(GenericArguments.integer(Text.of("value")), GenericArguments.string(Text.of("position")))
+				.permission(Utils.getPermission("userperm"))
+				.build();
+
+		CommandSpec regionContractAction = CommandSpec.builder().description(Text.of("Уменьшить регион"))
+				.executor(new RegionContractExecutor()).
 				arguments(GenericArguments.integer(Text.of("value")), GenericArguments.string(Text.of("position")))
 				.permission(Utils.getPermission("userperm"))
 				.build();
@@ -288,6 +295,7 @@ public class UniverseGuard {
 				.child(regionNameSpec, "name")
 				.child(regionListSpec, "list")
                                 .child(regionExpandAction, "expand")
+                                .child(regionContractAction, "contract")
 				.child(regionGamemodeSpec, "gamemode")
 				.child(regionEditSpec, "edit")
 				.child(regionFlagSpec, "flag")
