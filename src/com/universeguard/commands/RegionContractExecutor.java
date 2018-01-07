@@ -42,27 +42,27 @@ public class RegionContractExecutor implements CommandExecutor{
                     if(position.equals("up") || position.equals("u")){
                         Location<World> l = r.getPos1();
                         int newx = l.getBlockX();
-                        int newy = l.getBlockY()-value;
+                        int newy = l.getBlockY()+value;
                         int newz = l.getBlockZ();
                         World world = Sponge.getServer().getWorld("world").get();
                         Location<World> nl1 = new Location<World>(world, newx, newy, newz);
-                        r.setPos2(nl1);
+                        r.setPos1(nl1);
                         //Utils.sendMessage(player, TextColors.RED,"[Игровая Сторона] ", TextColors.WHITE, "Текущая позиция Y: ", r.getPos2().getBlockY());
                         Sponge.getCommandManager().process(player, "/contract "+value+" up");
                     }else if(position.equals("down") || position.equals("d")){
                         Location<World> l = r.getPos2();
                         int newx = l.getBlockX();
-                        int newy = l.getBlockY()+value;
+                        int newy = l.getBlockY()-value;
                         int newz = l.getBlockZ();
                         World world = Sponge.getServer().getWorld("world").get(); 
                         Location<World> nl1 = new Location<World>(world, newx, newy, newz);
-                        r.setPos1(nl1);
+                        r.setPos2(nl1);
                         
                         Sponge.getCommandManager().process(player, "/contract "+value+" down");
                     }else if(position.equals("west") || position.equals("w")){
                         if(r.getPos1().getBlockX()>r.getPos2().getBlockX()){
                             Location<World> l = r.getPos2();
-                            int newx = l.getBlockX()+value;
+                            int newx = l.getBlockX()-value;
                             int newy = l.getBlockY();
                             int newz = l.getBlockZ();
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
@@ -70,7 +70,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Sponge.getCommandManager().process(player, "/contract "+value+" west");
                         }else{
                             Location<World> l = r.getPos1();
-                            int newx = l.getBlockX()+value;
+                            int newx = l.getBlockX()-value;
                             int newy = l.getBlockY();
                             int newz = l.getBlockZ();
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
@@ -80,7 +80,7 @@ public class RegionContractExecutor implements CommandExecutor{
                     }else if(position.equals("east") || position.equals("e")){
                         if(r.getPos1().getBlockX()>r.getPos2().getBlockX()){
                             Location<World> l = r.getPos1();
-                            int newx = l.getBlockX()-value;
+                            int newx = l.getBlockX()+value;
                             int newy = l.getBlockY();
                             int newz = l.getBlockZ();
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
@@ -88,7 +88,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Sponge.getCommandManager().process(player, "/contract "+value+" east");
                         }else{
                             Location<World> l = r.getPos2();
-                            int newx = l.getBlockX()-value;
+                            int newx = l.getBlockX()+value;
                             int newy = l.getBlockY();
                             int newz = l.getBlockZ();
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
@@ -100,7 +100,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Location<World> l = r.getPos2();
                             int newx = l.getBlockX();
                             int newy = l.getBlockY();
-                            int newz = l.getBlockZ()+value;
+                            int newz = l.getBlockZ()-value;
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
                             r.setPos2(nl1);
                             Sponge.getCommandManager().process(player, "/contract "+value+" north");
@@ -108,7 +108,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Location<World> l = r.getPos1();
                             int newx = l.getBlockX();
                             int newy = l.getBlockY();
-                            int newz = l.getBlockZ()+value;
+                            int newz = l.getBlockZ()-value;
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
                             r.setPos1(nl1);
                             Sponge.getCommandManager().process(player, "/contract "+value+" north");
@@ -118,7 +118,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Location<World> l = r.getPos1();
                             int newx = l.getBlockX();
                             int newy = l.getBlockY();
-                            int newz = l.getBlockZ()-value;
+                            int newz = l.getBlockZ()+value;
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
                             r.setPos1(nl1);
                             Sponge.getCommandManager().process(player, "/contract "+value+" south");
@@ -126,7 +126,7 @@ public class RegionContractExecutor implements CommandExecutor{
                             Location<World> l = r.getPos2();
                             int newx = l.getBlockX();
                             int newy = l.getBlockY();
-                            int newz = l.getBlockZ()-value;
+                            int newz = l.getBlockZ()+value;
                                                     World world = Sponge.getServer().getWorld("world").get();                        Location<World> nl1 = new Location<World>(world, newx, newy, newz);
                             r.setPos2(nl1);
                             Sponge.getCommandManager().process(player, "/contract "+value+" south");   
