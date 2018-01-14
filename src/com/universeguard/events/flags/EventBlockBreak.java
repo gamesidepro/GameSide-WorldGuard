@@ -175,7 +175,7 @@ public class EventBlockBreak {
 		}
 
 	}
-
+/*
 	@Listener
 	public void onCollide(CollideEntityEvent event) {
 		for(Entity e : event.getEntities()) {
@@ -192,5 +192,5 @@ public class EventBlockBreak {
 		}
 		
 	}
-
+*/
 }
