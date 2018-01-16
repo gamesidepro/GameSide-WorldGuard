@@ -40,12 +40,12 @@ public class RegionDeleteExecutor implements CommandExecutor {
                             return CommandResult.success();
                         }
                         UUID p = player.getUniqueId();
-                        if((r.getOwners().contains(p) && r!=null) || player.hasPermission(Utils.getPermission("bypass"))) {
+                        if(r.isOwner(p) || player.hasPermission(Utils.getPermission("bypass"))) {
                             if(args.hasAny(Text.of("name"))) {
-                                    RegionUtils.delete(player, name);
+                            	RegionUtils.delete(player, name);
                             }
                             else {
-                                    RegionUtils.delete(player, player.getLocation());
+                            	RegionUtils.delete(player, player.getLocation());
                             }
                         }else{
                             Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Недостаточно прав.");
