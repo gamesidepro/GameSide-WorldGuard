@@ -141,7 +141,7 @@ public class RegionUtils {
 	public static Region load(Location<World> location) {
                 
 		ArrayList<Region> regions = new ArrayList<Region>();
-		if(UniverseGuard.instance.regions != null) {
+		if(UniverseGuard.instance.regions != null && !UniverseGuard.instance.regions.isEmpty()) {
 			for (Region r : UniverseGuard.instance.regions) {
 				if (isInRegion(r, location))
 					regions.add(r);
