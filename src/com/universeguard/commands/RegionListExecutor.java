@@ -24,12 +24,12 @@ public class RegionListExecutor implements CommandExecutor {
 		if(src instanceof Player) {
 			Player player = (Player)src;
 			ArrayList<Text> regions = new ArrayList<Text>();
-			Utils.sendMessage(player, TextColors.YELLOW, "--------------------Regions saved--------------------");
+			Utils.sendMessage(player, TextColors.YELLOW, "-------------------Список регионов-------------------");
 			for(Region r : UniverseGuard.instance.regions) {
 				regions.add(Text.of(r.getOwners().contains(player.getUniqueId()) ? TextColors.GOLD : TextColors.RESET, r.getName(), ","));
 			}
 			if(regions.isEmpty())
-				Utils.sendMessage(player, TextColors.RED, "There are no regions!");
+				Utils.sendMessage(player, TextColors.RED, "Регионов не найдено!");
 			else
 				Utils.sendMessage(player, regions.toArray());
 			Utils.sendMessage(player, TextColors.YELLOW, "-----------------------------------------------------");

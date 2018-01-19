@@ -48,11 +48,11 @@ public class RegionClaimExecutor implements CommandExecutor{
                                         }
                                         int mr = 0;
                                         UUID p = player.getUniqueId();
-					for(Region region : UniverseGuard.instance.regions) {
-						if(region.isOwner(p)) {
-                                                    mr = mr + 1;
-						}
-					}
+										for(Region region : UniverseGuard.instance.regions) {
+											if(region.isOwner(p)) {
+												mr++;
+											}
+										}
                                         if(mr>=maxprivates){
                                             Utils.sendMessage(player, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Вы уже использовали все приваты доступные вам.");
                                             return CommandResult.success();

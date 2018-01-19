@@ -24,7 +24,6 @@ import org.spongepowered.api.world.gen.populator.ChorusFlower;
 public class EventBlockPlace {
 
 	@Listener
-    @Include(ChangeBlockEvent.Place.class)
     @Exclude(ChangeBlockEvent.Grow.class)
 	public void onBlockPlaceByEntity(ChangeBlockEvent event) {
 		if (event.getCause().root() instanceof Enderman) {
@@ -36,18 +35,6 @@ public class EventBlockPlace {
 					GlobalRegion gr = RegionUtils.loadGlobal(event.getTransactions().get(0).getOriginal().getLocation().get().getExtent().getName());
 					if(gr != null)
 						event.setCancelled(!gr.getFlag("endermangrief"));
-				}
-			}
-		} 
-		else if (!(event.getCause().root() instanceof Player) && (event.getTransactions().get(0).getFinal().getState().getType() == BlockTypes.FIRE)) {
-			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
-			if (r != null) {
-				event.setCancelled(!r.getFlag("firespread"));
-			} else {
-				{
-					GlobalRegion gr = RegionUtils.loadGlobal(event.getTransactions().get(0).getOriginal().getLocation().get().getExtent().getName());
-					if(gr != null)
-						event.setCancelled(!gr.getFlag("firespread"));
 				}
 			}
 		}
@@ -64,6 +51,21 @@ public class EventBlockPlace {
 			}
 		}
 
+	}
+	@Listener
+	public void onBlockPlaceByEntity(ChangeBlockEvent.Place event) {
+		if (!(event.getCause().root() instanceof Player) && (event.getTransactions().get(0).getFinal().getState().getType() == BlockTypes.FIRE)) {
+			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
+			if (r != null) {
+				event.setCancelled(!r.getFlag("firespread"));
+			} else {
+				{
+					GlobalRegion gr = RegionUtils.loadGlobal(event.getTransactions().get(0).getOriginal().getLocation().get().getExtent().getName());
+					if(gr != null)
+						event.setCancelled(!gr.getFlag("firespread"));
+				}
+			}
+		}
 	}
 	
 	@Listener

@@ -39,7 +39,78 @@ public class RegionUtils {
 
 			for (File file : files) {
 				if (file.exists()) {
-					Region r = getByName(file.getName().substring(0, file.getName().indexOf(".json")));
+					String name = file.getName().substring(0, file.getName().indexOf(".json"));
+					Region r = getByName(name);
+					ConfigurationLoader<ConfigurationNode> loader = GsonConfigurationLoader.builder().setFile(file).build();
+
+					ConfigurationNode root;
+
+					try {
+						root = loader.load();
+					} catch (IOException e) {
+						root = loader.createEmptyNode(ConfigurationOptions.defaults());
+					}
+
+					ConfigurationNode region = root.getNode(name);
+					if(Sponge.getServer().getWorld(region.getNode("world").getString()).isPresent()) {
+						World world = Sponge.getServer().getWorld(region.getNode("world").getString()).get();
+						Location<World> pos1 = new Location<World>(world, region.getNode("pos1").getNode("x").getInt(),
+								region.getNode("pos1").getNode("y").getInt(), region.getNode("pos1").getNode("z").getInt());
+
+						Location<World> pos2 = new Location<World>(world, region.getNode("pos2").getNode("x").getInt(),
+								region.getNode("pos2").getNode("y").getInt(), region.getNode("pos2").getNode("z").getInt());
+
+						Location<World> teleport = new Location<World>(world, region.getNode("teleport").getNode("x").getInt(),
+								region.getNode("teleport").getNode("y").getInt(), region.getNode("teleport").getNode("z").getInt());
+
+						Location<World> spawn = new Location<World>(world, region.getNode("spawn").getNode("x").getInt(),
+								region.getNode("spawn").getNode("y").getInt(), region.getNode("spawn").getNode("z").getInt());
+
+						String d = region.getNode("dimension").getString();
+
+						String w = region.getNode("world").getString();
+
+
+						if (r == null)
+							r = new Region(pos1, pos2, d, w);
+
+						r.setName(name);
+						r.setPriority(region.getNode("priority").getInt());
+						r.setGameMode(region.getNode("gamemode").getString());
+						r.setTeleport(teleport);
+						r.setSpawn(spawn);
+
+						for (int i = 0; i < r.getAllFlags().size(); i++) {
+							r.setFlag(Region.getFlagNames().get(i), region.getNode("flags").getNode(Region.getFlagNames().get(i)).getBoolean());
+						}
+
+						ArrayList<UUID> owners = new ArrayList<UUID>();
+						for (int i = 0; i < region.getNode("owners").getChildrenList().size(); i++) {
+							String s = region.getNode("owners").getChildrenList().get(i).getString();
+							UUID id = UUID.fromString(s);
+							owners.add(id);
+						}
+
+						r.setOwners(owners);
+
+						ArrayList<UUID> members = new ArrayList<UUID>();
+						for (int i = 0; i < region.getNode("members").getChildrenList().size(); i++) {
+							String s = region.getNode("members").getChildrenList().get(i).getString();
+							UUID id = UUID.fromString(s);
+							members.add(id);
+						}
+
+						r.setMembers(members);
+
+						ArrayList<String> commands = new ArrayList<String>();
+						for (int i = 0; i < region.getNode("commands").getChildrenList().size(); i++) {
+							String s = region.getNode("commands").getChildrenList().get(i).getString();
+							commands.add(s);
+						}
+
+						r.setCommands(commands);
+					}
+
 					if (r != null)
 						regions.add(r);
 				}
@@ -70,7 +141,7 @@ public class RegionUtils {
 	public static Region load(Location<World> location) {
                 
 		ArrayList<Region> regions = new ArrayList<Region>();
-		if(UniverseGuard.instance.regions != null) {
+		if(UniverseGuard.instance.regions != null && !UniverseGuard.instance.regions.isEmpty()) {
 			for (Region r : UniverseGuard.instance.regions) {
 				if (isInRegion(r, location))
 					regions.add(r);
@@ -242,10 +313,17 @@ public class RegionUtils {
 
 		try {
 			loader.save(root);
-			int ind = UniverseGuard.instance.regions.indexOf(r);
-			if (ind != -1)
-			    UniverseGuard.instance.regions.remove(ind);
-			UniverseGuard.instance.regions.add(r);
+			int ind = -1;
+			for (Region reg : UniverseGuard.instance.regions) {
+				if (reg.getName().equalsIgnoreCase(r.getName())) {
+					ind = UniverseGuard.instance.regions.indexOf(reg);
+					break;
+				}
+			}
+			if(ind != -1)
+				UniverseGuard.instance.regions.set(ind, r);
+			else
+				UniverseGuard.instance.regions.add(r);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -289,11 +367,17 @@ public class RegionUtils {
         
 	public static Region getByName(String name) {
 		File file = new File("config/universeguard/regions/" + name + ".json");
+
 		if (!file.exists()) {
 			return null;
 		}
-
-		ConfigurationLoader<ConfigurationNode> loader = GsonConfigurationLoader.builder().setFile(file).build();
+		for(Region reg : UniverseGuard.instance.regions) {
+			if (reg.getName().equals(name)) {
+				return reg;
+			}
+		}
+		return null;
+		/*ConfigurationLoader<ConfigurationNode> loader = GsonConfigurationLoader.builder().setFile(file).build();
 
 		ConfigurationNode root;
 
@@ -364,37 +448,50 @@ public class RegionUtils {
 
 			return r;
 		}
-		return null;
+		return null;*/
 	}
 	
 	public static void delete(Player p, String name) {
 		File file = new File("config/universeguard/regions/" + name + ".json");
-		if (file.exists()) {
-			if(file.delete()){
-                            try{
-                            	int ind = -1;
-                                for(Region ar : UniverseGuard.instance.regions){
-                                    if(ar.getName().equals(name)) {
-										ind = UniverseGuard.instance.regions.indexOf(ar);
-										break;
-                                    }
-                                }
-                                if (ind != -1) {
-									UniverseGuard.instance.regions.remove(ind);
-									Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
-								} else
-									Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", name, " не найден!");
 
-							}catch(ConcurrentModificationException e){
-                                //Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален!");
-                                Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
-                                e.printStackTrace();
-                            }
-                        }else
-				Utils.sendMessage(p, TextColors.RED, "Can't delete the region ", name, "!");
+		try{
+			Region reg = null;
+			for(Region ar : UniverseGuard.instance.regions){
+				if(ar.getName().equals(name)) {
+					reg = ar;
+					break;
+				}
+			}
+			if (reg != null && file.exists()) {
+				UniverseGuard.instance.regions.remove(reg);
+				file.delete();
+				int maxprivates;
+				if(p.hasPermission("wg.maxprivate.admin")){
+					maxprivates = Utils.getMaxPrivateCount("maxprivate_admin");
+				}else if(p.hasPermission("wg.maxprivate.vip")){
+					maxprivates = Utils.getMaxPrivateCount("maxprivate_vip");
+				}else if(p.hasPermission("wg.maxprivate.prem")){
+					maxprivates = Utils.getMaxPrivateCount("maxprivate_prem");
+				}else if(p.hasPermission("wg.maxprivate.megaprem")){
+					maxprivates = Utils.getMaxPrivateCount("maxprivate_megaprem");
+				}else{
+					maxprivates = Utils.getMaxPrivateCount("maxprivate_default");
+				}
+				int mr = 0;
+				UUID pl = p.getUniqueId();
+				for(Region region : UniverseGuard.instance.regions) {
+					if(region.isOwner(pl)) {
+						mr++;
+					}
+				}
+				Utils.sendMessage(p, TextColors.GREEN, "[Игровая Сторона] ", name, TextColors.WHITE, " успешно удален! Осталось регионов: ", maxprivates-mr);
+			} else
+				Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Регион ", name, " не найден!");
+
+		}catch(ConcurrentModificationException e){
+			Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", name, TextColors.WHITE, " Произошла ошибка сервера!");
+			e.printStackTrace();
 		}
-		else
-			Utils.sendMessage(p, TextColors.RED, "Can't find the region ", name, "!");
 	}
 	
 	public static void delete(String name) {
@@ -417,7 +514,7 @@ public class RegionUtils {
 		if(r != null){
 			delete(p, r.getName());
 		}else
-			Utils.sendMessage(p, TextColors.RED, "There's no region here!");
+			Utils.sendMessage(p, TextColors.RED, "[Игровая Сторона] ", TextColors.WHITE, "Регион не найден!");
 		
 	}
 	
