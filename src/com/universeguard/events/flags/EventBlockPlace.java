@@ -1,5 +1,6 @@
 package com.universeguard.events.flags;
 
+import com.universeguard.UniverseGuard;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.Piston;
@@ -41,6 +42,7 @@ public class EventBlockPlace {
 		else if (!(event.getCause().root() instanceof Player) && !(event.getCause().root() instanceof Piston)) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
+                                UniverseGuard.instance.getLogger().info("Event is "+event.toString());
 				event.setCancelled(!r.getFlag("build"));
 			} else {
 				{

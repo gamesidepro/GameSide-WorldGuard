@@ -1,5 +1,6 @@
 package com.universeguard.events.flags;
 
+import com.universeguard.UniverseGuard;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.filter.cause.First;
@@ -8,6 +9,7 @@ import org.spongepowered.api.event.message.MessageChannelEvent;
 import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
+import org.spongepowered.api.Sponge;
 
 public class EventChat {
 
@@ -25,5 +27,6 @@ public class EventChat {
 					e.setCancelled(!gr.getFlag("sendchat"));
 			}
 		}
+
 	}
 }

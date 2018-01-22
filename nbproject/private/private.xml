@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/commands/RegionInfoExecutor.java</file>
-            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/config/ConfigurationManager.java</file>
             <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/UniverseGuard.java</file>
-            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/commands/RegionAddChestExecutor.java</file>
-            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/events/flags/EventBlockUse.java</file>
-            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/region/GlobalRegion.java</file>
+            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/commands/RegionContractExecutor.java</file>
+            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/commands/RegionExpandExecutor.java</file>
+            <file>file:/C:/Users/redap/Documents/Git/GameSide-WorldGuard/src/com/universeguard/events/flags/EventChat.java</file>
         </group>
     </open-files>
 </project-private>
