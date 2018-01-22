@@ -1,6 +1,7 @@
 package com.universeguard.events.flags;
 
 import com.universeguard.UniverseGuard;
+import com.universeguard.utils.Utils;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.Piston;
@@ -20,13 +21,11 @@ import org.spongepowered.api.item.ItemTypes;
 import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
-import org.spongepowered.api.world.gen.populator.ChorusFlower;
 
 public class EventBlockPlace {
 
 	@Listener
-    @Exclude(ChangeBlockEvent.Grow.class)
-	public void onBlockPlaceByEntity(ChangeBlockEvent event) {
+	public void onBlockPlaceByEntity(ChangeBlockEvent.Place event) {
 		if (event.getCause().root() instanceof Enderman) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
@@ -39,7 +38,7 @@ public class EventBlockPlace {
 				}
 			}
 		}
-		else if (!(event.getCause().root() instanceof Player) && !(event.getCause().root() instanceof Piston)) {
+		/*else if (!(event.getCause().root() instanceof Player) && !(event.getCause().root() instanceof Piston)) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
                                 UniverseGuard.instance.getLogger().info("Event is "+event.toString());
@@ -51,12 +50,8 @@ public class EventBlockPlace {
 						event.setCancelled(!gr.getFlag("build"));
 				}
 			}
-		}
-
-	}
-	@Listener
-	public void onBlockPlaceByEntity(ChangeBlockEvent.Place event) {
-		if (!(event.getCause().root() instanceof Player) && (event.getTransactions().get(0).getFinal().getState().getType() == BlockTypes.FIRE)) {
+		}*/
+		else if (!(event.getCause().root() instanceof Player) && (event.getTransactions().get(0).getFinal().getState().getType() == BlockTypes.FIRE)) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
 				event.setCancelled(!r.getFlag("firespread"));
@@ -68,6 +63,7 @@ public class EventBlockPlace {
 				}
 			}
 		}
+
 	}
 	
 	@Listener
