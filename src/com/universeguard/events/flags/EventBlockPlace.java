@@ -23,7 +23,21 @@ import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
 
 public class EventBlockPlace {
-
+    
+        @Listener
+        public void onOtherPlace(ChangeBlockEvent.Modify e){
+            if(e.isCancelled()){
+                e.setCancelled(false);
+            }
+        }
+        
+        @Listener
+        public void onOtherPost(ChangeBlockEvent.Post e){
+            if(e.isCancelled()){
+                e.setCancelled(false);
+            }
+        }
+        
 	@Listener
 	public void onBlockPlaceByEntity(ChangeBlockEvent.Place event) {
 		if (event.getCause().root() instanceof Enderman) {
@@ -38,10 +52,10 @@ public class EventBlockPlace {
 				}
 			}
 		}
-		/*else if (!(event.getCause().root() instanceof Player) && !(event.getCause().root() instanceof Piston)) {
+		else if ((event.getCause().root() instanceof Piston)) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
-                                UniverseGuard.instance.getLogger().info("Event is "+event.toString());
+                                //UniverseGuard.instance.getLogger().info("Event is "+event.toString());
 				event.setCancelled(!r.getFlag("build"));
 			} else {
 				{
@@ -50,7 +64,7 @@ public class EventBlockPlace {
 						event.setCancelled(!gr.getFlag("build"));
 				}
 			}
-		}*/
+		}
 		else if (!(event.getCause().root() instanceof Player) && (event.getTransactions().get(0).getFinal().getState().getType() == BlockTypes.FIRE)) {
 			Region r = RegionUtils.load(event.getTransactions().get(0).getOriginal().getLocation().get());
 			if (r != null) {
