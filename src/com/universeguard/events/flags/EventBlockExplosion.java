@@ -15,9 +15,12 @@ import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
 import com.universeguard.utils.Utils;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.entity.SpawnEntityEvent;
 
 public class EventBlockExplosion {
-    
+        
 	@Listener
 	public void onBlockExplode(ExplosionEvent.Detonate event) {
 		Entity src = null;
@@ -28,11 +31,15 @@ public class EventBlockExplosion {
 		if (region != null) {
 			if (src != null && src.getType() == EntityTypes.CREEPER) {
 				event.setCancelled(!region.getFlag("creeperexplosions"));
+                                
+                                
 			} else if (src != null
 					&& (src.getType() == EntityTypes.TNT_MINECART || src.getType() == EntityTypes.PRIMED_TNT)) {
 				event.setCancelled(!region.getFlag("tnt"));
+                                
 			} else {
 				event.setCancelled(!region.getFlag("otherexplosions"));
+                                
 			}
 		} else {
 			ArrayList<Location<World>> locations = new ArrayList<Location<World>>();

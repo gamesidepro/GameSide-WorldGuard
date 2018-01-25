@@ -9,6 +9,9 @@ import org.spongepowered.api.event.entity.SpawnEntityEvent;
 import com.universeguard.region.GlobalRegion;
 import com.universeguard.region.Region;
 import com.universeguard.utils.RegionUtils;
+import com.universeguard.utils.Utils;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
 
 public class EventSpawnEntity {
 	
@@ -16,7 +19,6 @@ public class EventSpawnEntity {
 	public void onEntitySpawn(SpawnEntityEvent event) {
 		if(!event.getEntities().isEmpty()) {
 			
-
                             if (event.getEntities().get(0) instanceof Animal) {
                                 Region r = RegionUtils.load(event.getEntities().get(0).getLocation());
                                     if (r != null) {
@@ -37,6 +39,7 @@ public class EventSpawnEntity {
                                             }
                             } else {
                                     if (!(event.getEntities().get(0) instanceof Item)) {
+                                        
                                         Region r = RegionUtils.load(event.getEntities().get(0).getLocation());
                                             if (r != null) {
                                                     event.setCancelled(!r.getFlag("mobs"));
